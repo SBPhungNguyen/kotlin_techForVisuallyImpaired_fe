@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Combined OCR - Object Detection</string>
+    <string name="ocr_title">OCR Text Recognition</string>
+    <string name="object_detection_title">Object Detection</string>
+    <string name="btn_capture">📸 Capture picture</string>
+    <string name="btn_upload_ocr">⬆️ Upload and Read</string>
+    <string name="btn_upload_detect">⬆️ Upload and Detect</string>
+    <string name="status_default">Status</string>
+    <string name="choose_feature">Choose Feature</string>
+    <string name="btn_ocr">OCR - Text Recognition</string>
+    <string name="btn_object_detection">Object Detection</string>
+</resources>

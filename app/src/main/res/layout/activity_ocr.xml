@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#22B14C">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OCR - Text Recognition"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"/>
+
+    <Button
+        android:id="@+id/btnCapture"
+        android:layout_width="match_parent"
+        android:layout_height="195dp"
+        android:background="#FF6F00"
+        android:text="📸 Capture picture"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:layout_marginBottom="30dp"/>
+
+    <Button
+        android:id="@+id/btnUpload"
+        android:layout_width="match_parent"
+        android:layout_height="166dp"
+        android:layout_marginTop="20dp"
+        android:background="#8E24AA"
+        android:text="⬆️ Upload and Read"
+        android:textColor="#ffffff"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:layout_marginTop="24dp" />
+</LinearLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="#22B14C">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose Feature"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:layout_marginBottom="48dp"/>
+
+    <Button
+        android:id="@+id/btnOcr"
+        android:layout_width="match_parent"
+        android:layout_height="195dp"
+        android:background="#FF6F00"
+        android:text="OCR - Text Recognition"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:layout_marginBottom="30dp"/>
+
+    <Button
+        android:id="@+id/btnObjectDetection"
+        android:layout_width="match_parent"
+        android:layout_height="195dp"
+        android:background="#1565C0"
+        android:text="Object Detection"
+        android:textColor="#ffffff"
+        android:textSize="24sp"/>
+</LinearLayout>
