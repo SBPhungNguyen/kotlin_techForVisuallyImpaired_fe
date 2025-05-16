@@ -38,7 +38,7 @@ class OcrActivity : AppCompatActivity() {
     private lateinit var tvStatus: TextView
     private var mediaPlayer: MediaPlayer? = null
 
-    private val serverUrl = "http://192.168.131.88:5000"  // Replace with actual server IP
+    private val serverUrl = "http://192.168.1.51:5000"  // Replace with actual server IP
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,38 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
     android:padding="24dp"
-    android:background="#22B14C">
+    android:background="@drawable/gradient_background"
+    android:importantForAccessibility="yes">
+
+    <ImageView
+    android:layout_width="120dp"
+    android:layout_height="120dp"
+    android:src="@drawable/ic_launcher_foreground"
+    android:layout_marginBottom="24dp"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Choose Feature"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:gravity="center"
-        android:layout_marginBottom="48dp"/>
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Choose Feature"
+    android:textSize="32sp"
+    android:textStyle="bold"
+    android:textColor="#FFFFFF"
+    android:gravity="center"
+    android:layout_marginBottom="48dp"
+    android:letterSpacing="0.1"
+    android:shadowColor="#80000000"
+    android:shadowDx="2"
+    android:shadowDy="2"
+    android:shadowRadius="4"
+    tools:ignore="HardcodedText"/>
 
     <Button
-        android:id="@+id/btnOcr"
-        android:layout_width="match_parent"
-        android:layout_height="195dp"
-        android:background="#FF6F00"
-        android:text="OCR - Text Recognition"
-        android:textColor="#ffffff"
-        android:textSize="24sp"
-        android:layout_marginBottom="30dp"/>
+    android:id="@+id/btnOcr"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="120dp"
+    android:background="@drawable/button_ripple_aqua"
+    android:text="OCR - Text Recognition"
+    android:textColor="#000000"
+    android:textSize="28sp"
+    android:layout_marginBottom="30dp"
+    android:padding="24dp"
+    android:fontFamily="sans-serif"
+    android:elevation="8dp"
+    android:stateListAnimator="@animator/button_state_animator"
+    android:drawableStart="@drawable/ic_text_recognition"
+    android:drawablePadding="16dp"
+    tools:ignore="HardcodedText"/>
 
     <Button
-        android:id="@+id/btnObjectDetection"
-        android:layout_width="match_parent"
-        android:layout_height="195dp"
-        android:background="#1565C0"
-        android:text="Object Detection"
-        android:textColor="#ffffff"
-        android:textSize="24sp"/>
-</LinearLayout>
+    android:id="@+id/btnObjectDetection"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="120dp"
+    android:background="@drawable/button_ripple_purple"
+    android:text="Object Detection"
+    android:textColor="#000000"
+    android:textSize="28sp"
+    android:padding="24dp"
+    android:fontFamily="sans-serif"
+    android:elevation="8dp"
+    android:stateListAnimator="@animator/button_state_animator"
+    android:drawableStart="@drawable/ic_object_detection"
+    android:drawablePadding="16dp"
+    tools:ignore="HardcodedText"/>
+    </LinearLayout>

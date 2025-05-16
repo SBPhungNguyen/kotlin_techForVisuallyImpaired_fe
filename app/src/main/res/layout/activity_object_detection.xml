@@ -1,49 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#22B14C">
+    android:background="@drawable/gradient_background"
+    android:importantForAccessibility="yes">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Object Detection"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
+        android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="36dp">
 
-    <Button
-        android:id="@+id/btnCapture"
-        android:layout_width="match_parent"
-        android:layout_height="195dp"
-        android:background="#005BBB"
-        android:text="📸 Capture picture"
-        android:textColor="#ffffff"
-        android:textSize="24sp"
-        android:layout_marginBottom="30dp"/>
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_object_detection_white" />
 
-    <Button
-        android:id="@+id/btnUpload"
-        android:layout_width="match_parent"
-        android:layout_height="166dp"
-        android:layout_marginTop="20dp"
-        android:background="#B00020"
-        android:text="⬆️ Upload and Detect"
-        android:textColor="#ffffff"
-        android:textSize="24sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Object Detection"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:letterSpacing="0.05"
+            android:shadowColor="#80000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="4"
+            tools:ignore="HardcodedText"/>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvStatus"
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Status"
-        android:textColor="#ffffff"
-        android:textSize="20sp"
-        android:layout_marginTop="24dp" />
+        android:layout_height="match_parent" />
+
+    <!-- Detection Overlay -->
+    <com.example.myapplication.DetectionOverlayView
+        android:id="@+id/overlayView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

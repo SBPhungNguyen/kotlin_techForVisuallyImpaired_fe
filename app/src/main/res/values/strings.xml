@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Combined OCR - Object Detection</string>
+    <string name="app_name">Vision Assistant</string>
     <string name="ocr_title">OCR Text Recognition</string>
     <string name="object_detection_title">Object Detection</string>
     <string name="btn_capture">📸 Capture picture</string>
@@ -9,4 +9,6 @@
     <string name="choose_feature">Choose Feature</string>
     <string name="btn_ocr">OCR - Text Recognition</string>
     <string name="btn_object_detection">Object Detection</string>
+    <string name="start_detection">Start Detection</string>
+    <string name="stop_detection">Stop Detection</string>
 </resources>
