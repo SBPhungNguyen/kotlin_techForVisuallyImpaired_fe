@@ -29,9 +29,10 @@ class ObjectDetectionActivity : AppCompatActivity() {
     private var frameCount = 0
     private val frameSkip = 3 // Process every 3rd frame
     private lateinit var networkClient: NetworkClient
+    private var mediaPlayer: MediaPlayer? = null
 
     // Backend configuration
-    private val flaskServerUrl = "http://192.168.1.51:5000" // Replace with actual server IP
+    private val flaskServerUrl = "https://f071-2402-800-6388-1200-399c-2e89-f544-521c.ngrok-free.app/" // Replace with actual server IP
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,9 +122,25 @@ class ObjectDetectionActivity : AppCompatActivity() {
     }
 
     private fun playAudio(audioUrl: String) {
-        MediaPlayer.create(this, Uri.parse(audioUrl)).apply {
-            start()
-            setOnCompletionListener { release() }
+        mediaPlayer = MediaPlayer().apply {
+            try {
+                setDataSource(audioUrl)
+                setOnPreparedListener { start() }
+                setOnCompletionListener {
+                    release()
+                    mediaPlayer = null
+                }
+                setOnErrorListener { _, _, _ ->
+                    release()
+                    mediaPlayer = null
+                    true
+                }
+                prepareAsync()
+            } catch (e: Exception) {
+                Log.e(TAG, "Audio playback failed", e)
+                release()
+                mediaPlayer = null
+            }
         }
     }
 
@@ -138,6 +155,8 @@ class ObjectDetectionActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        mediaPlayer?.release()
+        mediaPlayer = null
         stopCamera()
         cameraExecutor.shutdown()
     }
