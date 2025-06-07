@@ -31,6 +31,13 @@ class ObjectDetectionActivity : AppCompatActivity() {
     private lateinit var networkClient: NetworkClient
     private var mediaPlayer: MediaPlayer? = null
 
+    //Audio queue
+    private val audioQueue: ArrayDeque<String> = ArrayDeque()
+    private var isAudioPlaying = false
+    private var lastAudioPlayedTime = 0L
+    private val audioCooldownMillis = 3000L //3sec cool down
+
+
     // Backend configuration
     private val flaskServerUrl = "https://visionassistant-production.up.railway.app/" // Replace with actual server IP
 
@@ -121,18 +128,51 @@ class ObjectDetectionActivity : AppCompatActivity() {
         }
     }
 
-    private fun playAudio(audioUrl: String) {
+    private fun playAudio(audioUrl: String?) {
+        if (audioUrl.isNullOrBlank() || !audioUrl.startsWith("http")) {
+            Log.w(TAG, "Invalid or empty audio URL: $audioUrl")
+            return
+        }
+
+        val now = System.currentTimeMillis()
+        if (now - lastAudioPlayedTime < audioCooldownMillis) {
+            Log.d(TAG, "Audio skipped due to cooldown.")
+            return
+        }
+
+        audioQueue.add(audioUrl)
+
+        if (!isAudioPlaying) {
+            playNextAudioInQueue()
+        }
+    }
+
+    private fun playNextAudioInQueue() {
+        if (audioQueue.isEmpty()) {
+            isAudioPlaying = false
+            return
+        }
+
+        val nextAudioUrl = audioQueue.removeFirst()
         mediaPlayer = MediaPlayer().apply {
             try {
-                setDataSource(audioUrl)
-                setOnPreparedListener { start() }
+                setDataSource(nextAudioUrl)
+                setOnPreparedListener {
+                    lastAudioPlayedTime = System.currentTimeMillis()
+                    isAudioPlaying = true
+                    start()
+                }
                 setOnCompletionListener {
                     release()
                     mediaPlayer = null
+                    isAudioPlaying = false
+                    playNextAudioInQueue() // Play the next one if available
                 }
                 setOnErrorListener { _, _, _ ->
                     release()
                     mediaPlayer = null
+                    isAudioPlaying = false
+                    playNextAudioInQueue() // Skip errored audio
                     true
                 }
                 prepareAsync()
@@ -140,6 +180,8 @@ class ObjectDetectionActivity : AppCompatActivity() {
                 Log.e(TAG, "Audio playback failed", e)
                 release()
                 mediaPlayer = null
+                isAudioPlaying = false
+                playNextAudioInQueue()
             }
         }
     }

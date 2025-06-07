@@ -58,8 +58,8 @@ class NetworkClient(baseUrl: String) {
             ))
         }
 
-        val audioUrl = if (json.has("audioUrl")) {
-            "$serverUrl${json.getString("audioUrl")}"
+        val audioUrl = if (json.has("audio_url")) {
+            json.getString("audio_url")
         } else null
 
         return DetectionResult(objects, audioUrl)
