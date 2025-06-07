@@ -32,7 +32,7 @@ class ObjectDetectionActivity : AppCompatActivity() {
     private var mediaPlayer: MediaPlayer? = null
 
     // Backend configuration
-    private val flaskServerUrl = "https://f071-2402-800-6388-1200-399c-2e89-f544-521c.ngrok-free.app/" // Replace with actual server IP
+    private val flaskServerUrl = "https://visionassistant-production.up.railway.app/" // Replace with actual server IP
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
