@@ -38,6 +38,7 @@ class OcrActivity : AppCompatActivity() {
     private lateinit var tvStatus: TextView
     private var mediaPlayer: MediaPlayer? = null
 
+    // URL of the backend OCR server
     private val serverUrl = "https://visionassistant-production.up.railway.app/"  // Replace with actual server IP
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,14 +49,17 @@ class OcrActivity : AppCompatActivity() {
         val btnUpload: Button = findViewById(R.id.btnUpload)
         tvStatus = findViewById(R.id.tvStatus)
 
+        // Request necessary permissions
         ImageUtils.checkAndRequestPermissions(this)
 
+        // Capture button handler
         btnCapture.setOnClickListener {
             if (ImageUtils.checkCameraPermission(this)) {
                 openCamera()
             }
         }
 
+        // Upload button handler
         btnUpload.setOnClickListener {
             if (imageFile != null && imageFile!!.exists()) {
                 uploadImage(imageFile!!)
@@ -65,6 +69,7 @@ class OcrActivity : AppCompatActivity() {
         }
     }
 
+    // Open the camera and prepare to capture an image
     private fun openCamera() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure there's a camera activity to handle the intent
@@ -103,7 +108,8 @@ class OcrActivity : AppCompatActivity() {
             }
         }
     }
-
+    
+    // Create a file to store the captured image
     @Throws(IOException::class)
     private fun createImageFile(): File {
         // Create an image file name with timestamp
@@ -118,6 +124,7 @@ class OcrActivity : AppCompatActivity() {
         }
     }
 
+    // Handle permission request results
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -135,6 +142,7 @@ class OcrActivity : AppCompatActivity() {
         }
     }
 
+    // Receive the result from the camera activity
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
@@ -154,6 +162,7 @@ class OcrActivity : AppCompatActivity() {
         }
     }
 
+    // Upload the image to the server and receive OCR + audio
     private fun uploadImage(file: File) {
         tvStatus.text = "Uploading and processing..."
 
@@ -161,6 +170,7 @@ class OcrActivity : AppCompatActivity() {
         mediaPlayer?.release()
         mediaPlayer = null
 
+        // Use NetworkUtils to upload and get OCR result and audio
         NetworkUtils.uploadImageForOcr(file, serverUrl, object : NetworkUtils.OcrCallback {
             override fun onSuccess(text: String, audioUrl: String) {
                 runOnUiThread {
@@ -178,6 +188,7 @@ class OcrActivity : AppCompatActivity() {
         })
     }
 
+    // Play the audio file returned from the server
     private fun playAudio(audioUrl: String) {
         try {
             // Create a new MediaPlayer
@@ -201,6 +212,7 @@ class OcrActivity : AppCompatActivity() {
         }
     }
 
+    // Release media player resources when the activity is destroyed
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayer?.release()
