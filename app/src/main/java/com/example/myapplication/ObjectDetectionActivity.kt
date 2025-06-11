@@ -22,14 +22,14 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class ObjectDetectionActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityObjectDetectionBinding
-    private lateinit var cameraExecutor: ExecutorService
-    private var camera: Camera? = null
-    private var isProcessing = false
+    private lateinit var binding: ActivityObjectDetectionBinding 
+    private lateinit var cameraExecutor: ExecutorService 
+    private var camera: Camera? = null 
+    private var isProcessing = false  
     private var frameCount = 0
-    private val frameSkip = 3 // Process every 3rd frame
-    private lateinit var networkClient: NetworkClient
-    private var mediaPlayer: MediaPlayer? = null
+    private val frameSkip = 3 // Process every 3rd frame 
+    private lateinit var networkClient: NetworkClient 
+    private var mediaPlayer: MediaPlayer? = null 
 
     //Audio queue
     private val audioQueue: ArrayDeque<String> = ArrayDeque()
@@ -60,6 +60,7 @@ class ObjectDetectionActivity : AppCompatActivity() {
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
+    // Set up the CameraX pipeline
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
@@ -93,7 +94,7 @@ class ObjectDetectionActivity : AppCompatActivity() {
 
         }, ContextCompat.getMainExecutor(this))
     }
-
+    // Analyze each camera frame (skip some for performance)
     @OptIn(ExperimentalGetImage::class)
     private fun analyzeImage(imageProxy: ImageProxy) {
         frameCount++
@@ -105,12 +106,13 @@ class ObjectDetectionActivity : AppCompatActivity() {
         isProcessing = true
         val mediaImage = imageProxy.image
         if (mediaImage != null) {
-            val bitmap = ImageUtils.imageToBitmap(mediaImage)
-            processFrameWithFlask(bitmap)
+            val bitmap = ImageUtils.imageToBitmap(mediaImage) // Convert to Bitmap
+            processFrameWithFlask(bitmap) // Send to server
         }
         imageProxy.close()
     }
 
+    // Send frame to Flask backend and draw detection results
     private fun processFrameWithFlask(bitmap: Bitmap) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -128,6 +130,7 @@ class ObjectDetectionActivity : AppCompatActivity() {
         }
     }
 
+    // Enqueue and play audio from URL if cooldown allows
     private fun playAudio(audioUrl: String?) {
         if (audioUrl.isNullOrBlank() || !audioUrl.startsWith("http")) {
             Log.w(TAG, "Invalid or empty audio URL: $audioUrl")
@@ -146,7 +149,8 @@ class ObjectDetectionActivity : AppCompatActivity() {
             playNextAudioInQueue()
         }
     }
-
+    
+    // Play audio from the queue one by one
     private fun playNextAudioInQueue() {
         if (audioQueue.isEmpty()) {
             isAudioPlaying = false
@@ -186,15 +190,18 @@ class ObjectDetectionActivity : AppCompatActivity() {
         }
     }
 
+    // Clean up camera and overlay
     private fun stopCamera() {
         cameraExecutor.shutdown()
         binding.overlayView.clearDetections()
     }
 
+    // Check if camera permission is granted
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
-
+    
+    // Release media player and camera on exit
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayer?.release()
